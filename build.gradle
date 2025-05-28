@@ -32,6 +32,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'com.icegreen:greenmail:2.0.1'
 	implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation 'org.springframework.integration:spring-integration-mail'
+	implementation 'org.springframework.integration:spring-integration-core'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
 }
 
 tasks.named('test') {
