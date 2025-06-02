@@ -10,6 +10,7 @@ import org.springframework.integration.mail.ImapMailReceiver;
 import org.springframework.integration.mail.MailReceiver;
 import org.springframework.integration.mail.dsl.Mail;
 
+
 @Configuration
 @ConfigurationProperties(prefix = "email")
 public class MailIntegrationConfig {
@@ -28,7 +29,7 @@ public class MailIntegrationConfig {
 
     @Bean
     public MailReceiver imapMailReceiver() {
-        String imapUrl = String.format("imaps://%s:%s@%s:%d/INBOX", username, password, host, port);
+        String imapUrl = String.format("imap://%s:%s@%s:%d/INBOX", username, password, host, port);
         ImapMailReceiver receiver = new ImapMailReceiver(imapUrl);
         receiver.setShouldMarkMessagesAsRead(true);
         receiver.setShouldDeleteMessages(false);
