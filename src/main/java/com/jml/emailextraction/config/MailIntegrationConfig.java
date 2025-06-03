@@ -1,6 +1,7 @@
 package com.jml.emailextraction.config;
 
 import com.jml.emailextraction.service.EmailProcessor;
+import com.jml.emailextraction.service.MicrosoftOAuth2TokenService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,10 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.mail.ImapMailReceiver;
 import org.springframework.integration.mail.MailReceiver;
 import org.springframework.integration.mail.dsl.Mail;
+import jakarta.mail.Session;
 
 import java.util.Map;
+import java.util.Properties;
 
 
 @Configuration
@@ -28,7 +31,17 @@ public class MailIntegrationConfig {
     private Map<String, Object> properties;
 
     @Bean
-    public ImapMailReceiver imapMailReceiver() {
+    public ImapMailReceiver imapMailReceiver(MicrosoftOAuth2TokenService tokenService,
+                                             @Value("${microsoft.oauth2.user-email}") String email) {
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.imap.ssl.enable", "true");
+        javaMailProperties.put("mail.imap.auth.login.disable", "true");
+        javaMailProperties.put("mail.imap.auth.plain.disable", "true");
+        javaMailProperties.put("mail.imap.auth.xoauth2.disable", "false");
+
+        Session session = Session.getInstance(javaMailProperties);
+
         String imapUrl = String.format("imaps://%s:%s@%s:%d/INBOX", username, password, host, port);
         ImapMailReceiver receiver = new ImapMailReceiver(imapUrl);
         receiver.setShouldMarkMessagesAsRead(true);

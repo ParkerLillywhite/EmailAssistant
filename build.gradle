@@ -35,6 +35,9 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-mail'
 	implementation 'org.springframework.integration:spring-integration-core'
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
+	implementation 'com.nimbusds:nimbus-jose-jwt:9.38'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 }
 
 tasks.named('test') {
