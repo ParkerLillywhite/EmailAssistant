@@ -28,7 +28,7 @@ public class MailIntegrationConfig {
     private Map<String, Object> properties;
 
     @Bean
-    public MailReceiver imapMailReceiver() {
+    public ImapMailReceiver imapMailReceiver() {
         String imapUrl = String.format("imaps://%s:%s@%s:%d/INBOX", username, password, host, port);
         ImapMailReceiver receiver = new ImapMailReceiver(imapUrl);
         receiver.setShouldMarkMessagesAsRead(true);
