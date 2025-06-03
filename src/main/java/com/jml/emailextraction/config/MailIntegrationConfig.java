@@ -1,6 +1,8 @@
 package com.jml.emailextraction.config;
 
 import com.jml.emailextraction.service.EmailProcessor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,26 +12,24 @@ import org.springframework.integration.mail.ImapMailReceiver;
 import org.springframework.integration.mail.MailReceiver;
 import org.springframework.integration.mail.dsl.Mail;
 
+import java.util.Map;
+
 
 @Configuration
-@ConfigurationProperties(prefix = "email")
+@ConfigurationProperties(prefix = "spring.email")
+@Getter
+@Setter
 public class MailIntegrationConfig {
 
-    @Value("${email.username}")
-    private String username;
-
-    @Value("${email.password}")
-    private String password;
-
-    @Value("${email.host}")
     private String host;
-
-    @Value("${email.port}")
     private int port;
+    private String username;
+    private String password;
+    private Map<String, Object> properties;
 
     @Bean
     public MailReceiver imapMailReceiver() {
-        String imapUrl = String.format("imap://%s:%s@%s:%d/INBOX", username, password, host, port);
+        String imapUrl = String.format("imaps://%s:%s@%s:%d/INBOX", username, password, host, port);
         ImapMailReceiver receiver = new ImapMailReceiver(imapUrl);
         receiver.setShouldMarkMessagesAsRead(true);
         receiver.setShouldDeleteMessages(false);

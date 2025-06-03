@@ -1,15 +1,15 @@
-email:
-  host: outlook.office365.com
-  port: 993
-  username: assist@rekol.me
-  password: MarblinaSquisher9
-  protocol: imap
-  ssl:
-    enable: true
-  properties:
-    mail:
-      store:
-        protocol: imap
-      imap:
-        ssl:
-          enable: true
+spring:
+  email:
+    host: outlook.office365.com
+    port: 993
+    username: assist@rekol.me
+    password: MarblinaSquisher9
+    properties:
+      mail:
+        store:
+          protocol: imap
+        imap:
+          port: 993
+          ssl:
+            enable: true
+          ssl.trust: "*"
