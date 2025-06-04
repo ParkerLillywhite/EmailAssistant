@@ -24,6 +24,7 @@ public class MicrosoftOAuth2TokenService {
     private String scope;
 
     public String getAccessToken() {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
