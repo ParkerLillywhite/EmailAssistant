@@ -37,7 +37,14 @@ public class MicrosoftOAuth2TokenService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUri, request, Map.class);
 
-        return (String) response.getBody().get("access_token");
+
+        Map<String, Object> responseBody = response.getBody();
+
+        if (responseBody == null || !responseBody.containsKey("access_token")) {
+            throw new IllegalStateException("Access token could not be retrieved.");
+        }
+
+        return (String) responseBody.get("access_token");
     }
 }
 
