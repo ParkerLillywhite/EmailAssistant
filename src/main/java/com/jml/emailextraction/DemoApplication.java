@@ -1,4 +1,4 @@
-package com.jml.demo;
+package com.jml.emailextraction;
 
 import com.jml.emailextraction.config.MailIntegrationConfig;
 import org.springframework.boot.SpringApplication;
