@@ -1,6 +1,8 @@
 package com.jml.emailextraction.service;
 
+import lombok.Setter;
 import lombok.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,13 +17,19 @@ import java.util.Map;
 
 @Service
 @ConfigurationProperties(prefix = "microsoft.oauth2")
+@Setter
 public class MicrosoftOAuth2TokenService {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private String tokenUri;
     private String clientId;
     private String clientSecret;
     private String scope;
+
+    @Autowired
+    public MicrosoftOAuth2TokenService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public String getAccessToken() {
 

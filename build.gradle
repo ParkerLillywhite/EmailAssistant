@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
 	implementation 'com.nimbusds:nimbus-jose-jwt:9.38'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.mockito:mockito-core:5.12.0'
 
 }
 
