@@ -26,6 +26,8 @@ public class MicrosoftOAuth2TokenService {
     private String clientSecret;
     private String scope;
 
+    private String refreshToken;
+
     @Autowired
     public MicrosoftOAuth2TokenService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -50,6 +52,11 @@ public class MicrosoftOAuth2TokenService {
 
         if (responseBody == null || !responseBody.containsKey("access_token")) {
             throw new IllegalStateException("Access token could not be retrieved.");
+        }
+
+        if(responseBody.containsKey("refresh_token)")) {
+            refreshToken = responseBody.get("refresh_token").toString();
+            // TODO repository.save(refreshtoken) add a scheduled check token to check token expiry and proactively refresh.
         }
 
         return (String) responseBody.get("access_token");
