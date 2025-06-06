@@ -54,9 +54,10 @@ public class MicrosoftOAuth2TokenService {
             throw new IllegalStateException("Access token could not be retrieved.");
         }
 
+        // refresh token gathered here if it exists
         if(responseBody.containsKey("refresh_token)")) {
             refreshToken = responseBody.get("refresh_token").toString();
-            // TODO repository.save(refreshtoken) add a scheduled check token to check token expiry and proactively refresh.
+            // TODO repository.save(refreshtoken) add a scheduled check token to check token expiry and proactively refresh? ***Shouldn't be necessary with Spring Oauth2
         }
 
         return (String) responseBody.get("access_token");
