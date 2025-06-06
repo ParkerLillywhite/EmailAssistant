@@ -1,23 +1,11 @@
 package com.jml.emailextraction.config;
 
-import com.jml.emailextraction.service.EmailProcessor;
-import com.jml.emailextraction.service.MicrosoftOAuth2TokenService;
-import jakarta.mail.Store;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.mail.ImapMailReceiver;
-import org.springframework.integration.mail.MailReceiver;
-import org.springframework.integration.mail.dsl.Mail;
-import jakarta.mail.Session;
 
 import java.util.Map;
-import java.util.Properties;
 
 
 @Configuration
