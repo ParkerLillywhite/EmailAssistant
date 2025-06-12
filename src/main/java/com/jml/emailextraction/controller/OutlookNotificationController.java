@@ -25,7 +25,6 @@ public class OutlookNotificationController {
         for (Map<String, Object> notification : value) {
             Map<String, Object> resourceData = (Map<String, Object>) notification.get("resourceData");
             String messageId = (String) resourceData.get("id");
-            Message message = new Message(messageId);
 
             emailProcessorService.processMessage(messageId);
         }

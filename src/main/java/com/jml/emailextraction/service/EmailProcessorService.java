@@ -36,5 +36,9 @@ public class EmailProcessorService {
                 .buildRequest()
                 .get();
     }
+
+    public void processMessage(String messageId) {
+        System.out.println(messageId);
+    }
 }
 
