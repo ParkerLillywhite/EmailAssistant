@@ -38,7 +38,20 @@ public class EmailProcessorService {
     }
 
     public void processMessage(String messageId) {
-        System.out.println(messageId);
+        try {
+            Message message = graphClient
+                    .me()
+                    .messages(messageId)
+                    .buildRequest()
+                    .get();
+            System.out.println("Subject " + message.subject);
+            System.out.println("From " + message.from.emailAddress.address);
+            System.out.println("Body preview " + message.bodyPreview);
+            System.out.println("Body Content " + message.body.content);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
