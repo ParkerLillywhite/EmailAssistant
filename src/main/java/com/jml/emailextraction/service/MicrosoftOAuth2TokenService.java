@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+
 
 import java.util.Map;
 
@@ -19,7 +21,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "microsoft.oauth2")
 @Setter
 public class MicrosoftOAuth2TokenService {
-    private final RestTemplate restTemplate;
+    private final WebClient webClient = WebClient.create();
 
     private String tokenUri;
     private String clientId;
