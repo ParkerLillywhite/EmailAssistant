@@ -1,5 +1,6 @@
 package com.jml.emailextraction.controller;
 
+import com.jml.emailextraction.dto.NotificationPayload;
 import com.jml.emailextraction.service.EmailProcessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,20 +18,12 @@ public class OutlookNotificationController {
     EmailProcessorService emailProcessorService;
 
     @PostMapping
-    public ResponseEntity<String> handleNotification(@RequestBody Map<String, Object> payload,
-                                                     @RequestHeader(value = "validationToken", required = false) String validationToken) {
+    public ResponseEntity<String> handleNotification(@RequestBody NotificationPayload payload) {
 
-        List<Map<String, Object>> value = (List<Map<String, Object>>) payload.get("value"); // look up Unchecked class?
+        payload.getValue().stream()
+                .map(n -> n.getResourceData().getId())
+                .forEach(emailProcessorService::processMessage);
 
-        for (Map<String, Object> notification : value) {
-            Map<String, Object> resourceData = (Map<String, Object>) notification.get("resourceData");
-            String messageId = (String) resourceData.get("id");
-
-            emailProcessorService.processMessage(messageId);
-        }
-
-        System.out.println("Received new email notification: " + payload);
-        // Optionally: Fetch full email details using Graph API here
         return ResponseEntity.ok("Received");
     }
 }

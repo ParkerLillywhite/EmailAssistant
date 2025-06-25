@@ -11,5 +11,8 @@ public class OutlookOAuth2Properties {
     private final String clientId;
     private final String clientSecret;
     private final String tenantId;
-
+    private final String scope;
+    private final String grantType;
+    private final String provider;
+    private final String tokenUri;
 }

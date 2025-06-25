@@ -17,7 +17,7 @@ public class OAuth2WebClientConfig {
 
         ServletOAuth2AuthorizedClientExchangeFilterFunction oAuth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository, authorizedClientRepository);
 
-        oAuth2.setDefaultClientRegistrationId("graph");
+        oAuth2.setDefaultClientRegistrationId("outlook");
 
         return WebClient
                 .builder()
