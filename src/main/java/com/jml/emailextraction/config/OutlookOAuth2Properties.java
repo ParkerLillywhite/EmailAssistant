@@ -1,18 +1,21 @@
 package com.jml.emailextraction.config;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "spring.security.oauth.client.registration.outlook")
-@RequiredArgsConstructor
-@Getter
+@ConfigurationProperties(prefix = "spring.security.oauth2.client.registration.outlook")
+@Data
 public class OutlookOAuth2Properties {
-    private final String clientId;
-    private final String clientSecret;
-    private final String tenantId;
-    private final String scope;
-    private final String grantType;
-    private final String provider;
-    private final String tokenUri;
+    private String clientId;
+    private String clientSecret;
+    private String tenantId;
+    private String scope;
+    private String grantType;
+    private String provider;
+    private String tokenUri;
 }

@@ -12,16 +12,34 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OAuth2WebClientConfig {
 
     @Bean
-    public WebClient graphWebClient(ClientRegistrationRepository clientRegistrationRepository,
-                                    OAuth2AuthorizedClientRepository authorizedClientRepository) {
+    public OAuth2AuthorizedClientManager authorizedClientManager(
+            ClientRegistrationRepository clientRegistrationRepository,
+            OAuth2AuthorizedClientRepository authorizedClientRepository) {
 
-        ServletOAuth2AuthorizedClientExchangeFilterFunction oAuth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository, authorizedClientRepository);
+        OAuth2AuthorizedClientProvider authorizedClientProvider =
+                OAuth2AuthorizedClientProviderBuilder.builder()
+                        .clientCredentials()
+                        .build();
 
-        oAuth2.setDefaultClientRegistrationId("outlook");
+        DefaultOAuth2AuthorizedClientManager manager =
+                new DefaultOAuth2AuthorizedClientManager(
+                        clientRegistrationRepository,
+                        authorizedClientRepository);
+        manager.setAuthorizedClientProvider(authorizedClientProvider);
 
-        return WebClient
-                .builder()
-                .apply(oAuth2.oauth2Configuration())
+        return manager;
+    }
+
+    @Bean
+    WebClient graphWebClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+
+        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 =
+                new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+        oauth2.setDefaultClientRegistrationId("outlook");
+        oauth2.setDefaultOAuth2AuthorizedClient(true);
+
+        return WebClient.builder()
+                .apply(oauth2.oauth2Configuration())
                 .build();
     }
 }
