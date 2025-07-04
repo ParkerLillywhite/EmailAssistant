@@ -2,7 +2,9 @@ package com.jml.emailextraction.controller;
 
 import com.jml.emailextraction.dto.NotificationPayload;
 import com.jml.emailextraction.service.EmailProcessorService;
+import com.jml.emailextraction.service.GraphAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.mail.Message;
@@ -17,6 +19,15 @@ public class OutlookNotificationController {
     @Autowired
     EmailProcessorService emailProcessorService;
 
+    @GetMapping
+    public ResponseEntity<String> validateNotificationUrl(@RequestParam("validationToken") String token) {
+        System.out.println("Received validationToken: " + token);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(token);
+    }
+
     @PostMapping
     public ResponseEntity<String> handleNotification(@RequestBody NotificationPayload payload) {
 
@@ -26,4 +37,6 @@ public class OutlookNotificationController {
 
         return ResponseEntity.ok("Received");
     }
+
+
 }
