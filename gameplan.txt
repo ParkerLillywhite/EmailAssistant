@@ -1,0 +1,13 @@
+
+you need to make an email receiving rule set with a rule that has an action to write to your bucket.
+
+
+SES
+Set up S3 bucket for storage
+
+    store email in s3 configure it to trigger lambda when new mail arrives
+    the lambda fetches the raw message from s3 parses it, and processes it.
+
+Lambda for java code
+
+    when you write your code, package it as a JAR and deploy it on Lambda

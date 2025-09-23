@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'com.jml'
@@ -24,24 +25,39 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testImplementation 'com.icegreen:greenmail:2.0.1'
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
-	implementation 'org.springframework.integration:spring-integration-mail'
 	implementation 'org.springframework.integration:spring-integration-core'
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
 	implementation 'com.nimbusds:nimbus-jose-jwt:9.38'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.mockito:mockito-core:5.12.0'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'com.microsoft.graph:microsoft-graph:5.50.0'
-	implementation 'com.azure:azure-identity:1.10.0'
+    implementation("org.springframework.cloud:spring-cloud-function-adapter-aws:4.0.0")
+    // Spring Cloud Function AWS adapter
+    implementation("org.springframework.cloud:spring-cloud-function-adapter-aws:4.0.0")
 
+    // AWS Lambda Java Core
+    implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
+
+    // AWS SDK v1 for S3 (since your code uses AmazonS3ClientBuilder)
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.767")
+
+    // JavaMail API (Jakarta Mail)
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
+
+    // Logging (optional but recommended for Lambda)
+    implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.12.600'
+
+
+}
+
+shadowJar {
+    archiveBaseName.set('email-processor')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0.0')
 }
 
 tasks.named('test') {
