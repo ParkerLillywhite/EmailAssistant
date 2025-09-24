@@ -20,7 +20,14 @@ import java.util.Map;
 import com.jml.emailextraction.constants.EmailProcessorConstants;
 
 public class EmailProcessorService implements RequestHandler<Map<String, Object>, String> {
-    private final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+
+    protected AmazonS3 getS3Client() {
+        return AmazonS3ClientBuilder.defaultClient();
+    }
+
+    protected AmazonSimpleEmailService getSESClient() {
+        return AmazonSimpleEmailServiceClientBuilder.defaultClient();
+    }
 
     @Override
     public String handleRequest(Map<String, Object> event, Context context) {
@@ -37,9 +44,9 @@ public class EmailProcessorService implements RequestHandler<Map<String, Object>
         Map<String, Object> objectMap = (Map<String, Object>) s3Map.get("object");
         String key = (String) objectMap.get("key");
 
-        AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.defaultClient();
+        AmazonSimpleEmailService client = getSESClient();
 
-        try (InputStream rawEmail = s3.getObject(bucket, key).getObjectContent()) {
+        try (InputStream rawEmail = getS3Client().getObject(bucket, key).getObjectContent()) {
             Session session = Session.getDefaultInstance(new Properties());
             MimeMessage message = new MimeMessage(session, rawEmail);
 
